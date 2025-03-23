@@ -5,6 +5,7 @@ import br.com.connectify.users.adapters.`in`.controller.dto.CreateUserOutputDTO
 import br.com.connectify.users.adapters.`in`.controller.dto.GetUserDTO
 import br.com.connectify.users.adapters.`in`.controller.dto.UpdateUserDTO
 import br.com.connectify.users.adapters.`in`.controller.mapper.UserControllerMapper
+import br.com.connectify.users.application.ports.`in`.DeleteUserInputPort
 import br.com.connectify.users.application.ports.`in`.GetUserByIdInputPort
 import br.com.connectify.users.application.ports.`in`.PersistUserInputPort
 import br.com.connectify.users.application.ports.`in`.UpdateUserInputPort
@@ -19,6 +20,7 @@ class UserController (
     val persistUser: PersistUserInputPort,
     val getUserById: GetUserByIdInputPort,
     val updateUser: UpdateUserInputPort,
+    val deleteUser: DeleteUserInputPort
 ){
     @PostMapping
     fun persist(@RequestBody dto: CreateUserInputDTO): ResponseEntity<CreateUserOutputDTO> {
@@ -38,5 +40,11 @@ class UserController (
         val user = mapper.updateUserToEntity(dto)
         val updatedUser = updateUser.update(user)
         return ResponseEntity.ok(mapper.entityToGetUser(updatedUser))
+    }
+
+    @DeleteMapping("{/id}")
+    fun deleteUser(@PathVariable id: String): ResponseEntity<Void> {
+        deleteUser.delete(id)
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build()
     }
 }
