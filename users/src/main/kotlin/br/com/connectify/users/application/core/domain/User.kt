@@ -15,4 +15,14 @@ data class User(
     val birthDate: LocalDate,
     var accountCreationDate: LocalDate? = null,
     val gender: Gender
-)
+) {
+    fun followUser(user: User): User {
+        val updatedFollowing = following?.plus(user) ?: listOf(user)
+        return this.copy(following = updatedFollowing)
+    }
+
+    fun addFollower(user: User): User {
+        val updatedFollowers = followers?.plus(user) ?: listOf(user)
+        return this.copy(followers = updatedFollowers)
+    }
+}

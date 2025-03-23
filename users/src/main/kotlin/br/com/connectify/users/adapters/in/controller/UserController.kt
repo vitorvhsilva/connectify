@@ -1,14 +1,8 @@
 package br.com.connectify.users.adapters.`in`.controller
 
-import br.com.connectify.users.adapters.`in`.controller.dto.CreateUserInputDTO
-import br.com.connectify.users.adapters.`in`.controller.dto.CreateUserOutputDTO
-import br.com.connectify.users.adapters.`in`.controller.dto.GetUserDTO
-import br.com.connectify.users.adapters.`in`.controller.dto.UpdateUserDTO
+import br.com.connectify.users.adapters.`in`.controller.dto.*
 import br.com.connectify.users.adapters.`in`.controller.mapper.UserControllerMapper
-import br.com.connectify.users.application.ports.`in`.DeleteUserInputPort
-import br.com.connectify.users.application.ports.`in`.GetUserByIdInputPort
-import br.com.connectify.users.application.ports.`in`.PersistUserInputPort
-import br.com.connectify.users.application.ports.`in`.UpdateUserInputPort
+import br.com.connectify.users.application.ports.`in`.*
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -20,7 +14,8 @@ class UserController (
     val persistUser: PersistUserInputPort,
     val getUserById: GetUserByIdInputPort,
     val updateUser: UpdateUserInputPort,
-    val deleteUser: DeleteUserInputPort
+    val deleteUser: DeleteUserInputPort,
+    val followUser: FollowUserInputPort
 ){
     @PostMapping
     fun persist(@RequestBody dto: CreateUserInputDTO): ResponseEntity<CreateUserOutputDTO> {
@@ -46,5 +41,12 @@ class UserController (
     fun deleteUser(@PathVariable id: String): ResponseEntity<Void> {
         deleteUser.delete(id)
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build()
+    }
+
+    @PostMapping("/follow")
+    fun followUser(@RequestBody dto: FollowUserDTO): ResponseEntity<UserFollowersDTO> {
+        val user = followUser.follow(dto.userId, dto.followerId)
+        val userFollowers: UserFollowersDTO = mapper.entityToUserFollowers(user)
+        return ResponseEntity.ok(userFollowers)
     }
 }

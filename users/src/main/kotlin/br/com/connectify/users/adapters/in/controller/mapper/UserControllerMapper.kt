@@ -1,13 +1,8 @@
 package br.com.connectify.users.adapters.`in`.controller.mapper
 
-import br.com.connectify.users.adapters.`in`.controller.dto.CreateUserInputDTO
-import br.com.connectify.users.adapters.`in`.controller.dto.CreateUserOutputDTO
-import br.com.connectify.users.adapters.`in`.controller.dto.GetUserDTO
-import br.com.connectify.users.adapters.`in`.controller.dto.UpdateUserDTO
-import br.com.connectify.users.application.core.domain.Gender
+import br.com.connectify.users.adapters.`in`.controller.dto.*
 import br.com.connectify.users.application.core.domain.User
 import org.springframework.stereotype.Component
-import java.time.LocalDate
 
 @Component
 class UserControllerMapper {
@@ -68,6 +63,15 @@ class UserControllerMapper {
             password = dto.password,
             birthDate = dto.birthDate,
             gender = dto.gender
+        )
+    }
+
+    fun entityToUserFollowers(user: User): UserFollowersDTO {
+        return UserFollowersDTO(
+            userId = user.userId,
+            followers = user.followers?.map{
+                SimplifiedFollowersDTO(it.userId, it.username)
+            } ?: emptyList()
         )
     }
 }
