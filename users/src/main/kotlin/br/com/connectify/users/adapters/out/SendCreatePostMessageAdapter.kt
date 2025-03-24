@@ -5,7 +5,9 @@ import br.com.connectify.users.application.ports.out.SendCreatePostMessageOutput
 import io.awspring.cloud.sqs.operations.SqsTemplate
 import io.github.oshai.kotlinlogging.KLogger
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.stereotype.Component
 
+@Component
 class SendCreatePostMessageAdapter(
     @Value("\${vitorvhsilva.aws.sqs.queue.url}") val url: String,
     val sqsTemplate: SqsTemplate,

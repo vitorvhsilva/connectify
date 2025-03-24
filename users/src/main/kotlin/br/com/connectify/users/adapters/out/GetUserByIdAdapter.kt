@@ -6,8 +6,10 @@ import br.com.connectify.users.adapters.out.repository.mapper.UserEntityMapper
 import br.com.connectify.users.application.core.domain.User
 import br.com.connectify.users.application.ports.out.GetUserByIdOutputPort
 import org.springframework.cache.annotation.Cacheable
+import org.springframework.stereotype.Component
 
-open class GetUserByIdAdapter(
+@Component
+class GetUserByIdAdapter(
     val userRepository: UserRepository,
     val mapper: UserEntityMapper
 ): GetUserByIdOutputPort {
