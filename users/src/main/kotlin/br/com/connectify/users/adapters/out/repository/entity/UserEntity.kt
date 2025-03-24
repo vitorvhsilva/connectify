@@ -22,6 +22,6 @@ data class UserEntity(
     val followers: List<UserEntity>,
     val birthDate: LocalDate,
     var accountCreationDate: LocalDate,
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     val gender: Gender
 )
