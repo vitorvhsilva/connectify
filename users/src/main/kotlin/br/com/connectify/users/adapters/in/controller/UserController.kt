@@ -1,6 +1,7 @@
 package br.com.connectify.users.adapters.`in`.controller
 
 import br.com.connectify.users.adapters.`in`.controller.dto.*
+import br.com.connectify.users.adapters.`in`.controller.events.CreatePostDTO
 import br.com.connectify.users.adapters.`in`.controller.mapper.UserControllerMapper
 import br.com.connectify.users.application.ports.`in`.*
 import org.springframework.http.HttpStatus
@@ -15,7 +16,8 @@ class UserController (
     val getUserById: GetUserByIdInputPort,
     val updateUser: UpdateUserInputPort,
     val deleteUser: DeleteUserInputPort,
-    val followUser: FollowUserInputPort
+    val followUser: FollowUserInputPort,
+    val createPost: CreatePostInputPort
 ){
     @PostMapping
     fun persist(@RequestBody dto: CreateUserInputDTO): ResponseEntity<CreateUserOutputDTO> {
@@ -48,5 +50,11 @@ class UserController (
         val user = followUser.follow(dto.userId, dto.followerId)
         val userFollowers: UserFollowersDTO = mapper.entityToUserFollowers(user)
         return ResponseEntity.ok(userFollowers)
+    }
+
+    @PostMapping("/post")
+    fun createPost(@RequestBody dto: CreatePostDTO): ResponseEntity<Void> {
+        createPost.create(dto.userId, dto.postText)
+        return ResponseEntity.status(HttpStatus.CREATED).build()
     }
 }
