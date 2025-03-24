@@ -2,7 +2,9 @@ package br.com.connectify.users.adapters.out.repository.mapper
 
 import br.com.connectify.users.adapters.out.repository.entity.UserEntity
 import br.com.connectify.users.application.core.domain.User
+import org.springframework.stereotype.Component
 
+@Component
 class UserEntityMapper {
     fun toEntity(user: User): UserEntity {
         return UserEntity(

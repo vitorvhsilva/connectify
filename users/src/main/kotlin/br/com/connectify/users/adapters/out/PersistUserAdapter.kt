@@ -4,7 +4,9 @@ import br.com.connectify.users.adapters.out.repository.UserRepository
 import br.com.connectify.users.adapters.out.repository.mapper.UserEntityMapper
 import br.com.connectify.users.application.core.domain.User
 import br.com.connectify.users.application.ports.out.PersistUserOutputPort
+import org.springframework.stereotype.Component
 
+@Component
 class PersistUserAdapter(
     val repository: UserRepository,
     val mapper: UserEntityMapper

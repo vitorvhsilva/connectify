@@ -39,7 +39,7 @@ class UserController (
         return ResponseEntity.ok(mapper.entityToGetUser(updatedUser))
     }
 
-    @DeleteMapping("{/id}")
+    @DeleteMapping("/{id}")
     fun deleteUser(@PathVariable id: String): ResponseEntity<Void> {
         deleteUser.delete(id)
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build()

@@ -16,11 +16,12 @@ data class UserEntity(
     val email: String,
     val password: String,
     val description: String,
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "userId")
+    @ManyToMany(fetch = FetchType.LAZY)
     val following: List<UserEntity>,
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "userId")
+    @ManyToMany(fetch = FetchType.LAZY)
     val followers: List<UserEntity>,
     val birthDate: LocalDate,
     var accountCreationDate: LocalDate,
+    @Enumerated
     val gender: Gender
 )

@@ -5,8 +5,10 @@ import br.com.connectify.users.adapters.out.repository.mapper.UserEntityMapper
 import br.com.connectify.users.application.core.domain.User
 import br.com.connectify.users.application.ports.out.UpdateUserOutputPort
 import org.springframework.cache.annotation.CachePut
+import org.springframework.stereotype.Component
 
-open class UpdateUserAdapter(
+@Component
+class UpdateUserAdapter(
     val userRepository: UserRepository,
     val mapper: UserEntityMapper
 ): UpdateUserOutputPort {
